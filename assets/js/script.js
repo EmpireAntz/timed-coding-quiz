@@ -15,8 +15,10 @@ var buttonBody = document.querySelector("#answerButtons")
 var questionEl = document.querySelector("#question")
 var seconds = 60
 var currentQuestionIndex = 0
-
+var timerInterval;
+var answeredCorrectly = 0
 var questions = [
+
     {
         question: "What does HTML stand for?",
         choices: [ 
@@ -66,7 +68,58 @@ var questions = [
             "document.write()"
         ],
         answer: "console.log()"
+    },
+    {
+        question: "Which one of these is the strict equality operator?",
+        choices: [
+            "=",
+            "==",
+            "===",
+            "None of the above"
+        ],
+        answer: "==="
+    },
+    {
+        question: "How do you select a class element in CSS?",
+        choices: [
+            "With the # class selector",
+            "With the % class selector",
+            "With the . class selector",
+            "With the element class selector"
+        ],
+        answer: "With the # class selector"
+    },
+    {
+        question: "Which one of these is the modulus operator?",
+        choices: [
+            "*",
+            "@",
+            "/",
+            "%"
+        ],
+        answer: "%"
+    },
+    {
+        question: "Which one of these is a proper way to write a function?",
+        choices: [
+            ":function{}-html",
+            "function functionName{}[]",
+            "find-function-name(//https)",
+            "function functionName(){}"
+        ],
+        answer: "function functionName(){}"
+    },
+    {
+        question: "How many elements can you have in you HTML?",
+        choices: [
+            "3",
+            "1025",
+            "As many as you want",
+            "None of the above"
+        ],
+        answer: "As many as you want"
     }
+
 ]
 startButton.addEventListener("click", function() {
     startButton.style.display ="none"
@@ -75,7 +128,7 @@ startButton.addEventListener("click", function() {
 })
 
 function startTimer() {
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         seconds--
         timer.textContent = seconds 
         if (seconds <= 0) {
@@ -85,28 +138,35 @@ function startTimer() {
     },1000)
 }
 
+function stopTimer() {
+    clearInterval(timerInterval)
+}
 
 function displayQuestions(index) {
     questionEl.innerHTML = questions[index].question
     buttonBody.innerHTML = ""
-
+    console.log(index)
     for (i = 0; i < questions[index].choices.length; i++) {
-        var button = document.createElement("button");
-        button.innerHTML = questions[index].choices[i];
-        buttonBody.appendChild(button);
+        var button = document.createElement("button")
+        button.innerHTML = questions[index].choices[i]
+        buttonBody.appendChild(button)
     }
 }
 
 document.querySelector("#answerButtons").addEventListener("click", function(event) {
     if (event.target.innerHTML === questions[currentQuestionIndex].answer) {
         console.log("correct")
+        answeredCorrectly ++
     }
     else {
         console.log("incorrect")
+        if(seconds > 10) {
         seconds -= 10
+        }
     }
 
     currentQuestionIndex++
+    
     if (currentQuestionIndex < questions.length) {
         displayQuestions(currentQuestionIndex)
     }
@@ -116,9 +176,18 @@ document.querySelector("#answerButtons").addEventListener("click", function(even
 })
 
 function endQuiz() {
-    buttonBody.style.display = "none"
-    questionEl.innerHTML =  "You completed the quiz with " + seconds + " seconds left"
     console.log("quiz ended")
+    buttonBody.style.display = "none"
+    var score = document.createElement("p")
+    stopTimer()
+    if (seconds == 0) {
+        questionEl.innerHTML = "You Ran out of time!"
+    }
+    else {
+        questionEl.innerHTML =  "You completed the quiz with " + seconds + " seconds left"
+    }
+    score.innerHTML = "You answered " + answeredCorrectly + " out of " + questions.length + " correct"
+    questionEl.appendChild(score)
 }
 
 

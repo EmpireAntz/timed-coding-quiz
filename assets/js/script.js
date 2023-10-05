@@ -82,9 +82,9 @@ var questions = [
     {
         question: "How do you select a class element in CSS?",
         choices: [
-            "With the # class selector",
-            "With the % class selector",
-            "With the . class selector",
+            "With the # selector",
+            "With the % selector",
+            "With the . selector",
             "With the element class selector"
         ],
         answer: "With the # class selector"

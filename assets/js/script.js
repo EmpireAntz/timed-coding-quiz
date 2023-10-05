@@ -11,52 +11,114 @@
 // THEN I can save my initials and my score
 var timer = document.querySelector("#timer")
 var startButton = document.querySelector("#start")
-var seconds = 60;
-function startQuiz() {
+var buttonBody = document.querySelector("#answerButtons")
+var questionEl = document.querySelector("#question")
+var seconds = 60
+var currentQuestionIndex = 0
+
+var questions = [
+    {
+        question: "What does HTML stand for?",
+        choices: [ 
+            "Hippos Tigers Monkeys and Lemurs",
+            "Hyperspeed Textile Marking Lateral",
+            "Heavy Tactile Medical Lining",
+            "Hyper Text Markup Language"
+        ],
+        answer: "Hyper Text Markup Language"
+    }, 
+    {
+        question: "What is the first thing you should do when debugging something?",
+        choices: [
+            "Freak out and start screaming",
+            "Open the devtools", 
+            "Open a Javascript file",
+            "Use a debugging extension"
+        ],
+        answer: "Open the devtools"
+    },
+    {
+        question: "Which of the following keywords is used to define a variable in Javascript?",
+        choices: [
+            "var",
+            "let", 
+            "const",
+            "All of the above"
+        ],
+        answer: "All of the above"
+    },
+    {
+        question: "Which of the following methods is used to access HTML elements using Javascript?",
+        choices: [
+            "getElementbyId()",
+            "getElementbyHTML()", 
+            "getElementbyClass()",
+            "None of the above"
+        ],
+        answer: "getElementbyId()"
+    },
+    {
+        question: "Which one of these would you want to use when debugging your code?",
+        choices: [
+            "window.alert()",
+            "devtool.debug()", 
+            "console.log()",
+            "document.write()"
+        ],
+        answer: "console.log()"
+    }
+]
+startButton.addEventListener("click", function() {
+    startButton.style.display ="none"
+    startTimer()
+    displayQuestions(currentQuestionIndex)
+})
+
+function startTimer() {
     var timerInterval = setInterval(function() {
         seconds--
         timer.textContent = seconds 
-        if (seconds === 0) {
+        if (seconds <= 0) {
             clearInterval(timerInterval)
+            endQuiz()
         }
     },1000)
-    startButton.disabled = true 
-    quizContent()
 }
 
-startButton.addEventListener("click", startQuiz)
 
-function quizContent() {
-    var button1 = document.createElement("button")
-    var button2 = document.createElement("button")
-    var button3 = document.createElement("button")
-    var button4 = document.createElement("button")
-    var buttonBody = document.querySelector("#answerButtons")
-    var question = document.querySelector("#question")
+function displayQuestions(index) {
+    questionEl.innerHTML = questions[index].question
+    buttonBody.innerHTML = ""
 
-    question.innerHTML ="What does HTML stand for?"
-    button1.innerHTML = "Hippos Tigers Monkeys and Lemurs"
-    button2.innerHTML = "Hyperspeed Textile Marking Lateral"
-    button3.innerHTML = "Heavy Tactile Molding Lining"
-    button4.innerHTML = "Hyper Text Markup Language"
-
-    button1.dataset.answer = false
-    button2.dataset.answer = false
-    button3.dataset.answer = false
-    button4.dataset.answer = true
-    
-    buttonBody.appendChild(button1)
-    buttonBody.appendChild(button2)
-    buttonBody.appendChild(button3)
-    buttonBody.appendChild(button4)
-
-    buttonBody.addEventListener("click", function(event) {
-        console.log(event)
-        var buttonClicked = event.target
-        console.log(event.target)
-    
-    })
+    for (i = 0; i < questions[index].choices.length; i++) {
+        var button = document.createElement("button");
+        button.innerHTML = questions[index].choices[i];
+        buttonBody.appendChild(button);
+    }
 }
 
+document.querySelector("#answerButtons").addEventListener("click", function(event) {
+    if (event.target.innerHTML === questions[currentQuestionIndex].answer) {
+        console.log("correct")
+    }
+    else {
+        console.log("incorrect")
+        seconds -= 10
+    }
+
+    currentQuestionIndex++
+    if (currentQuestionIndex < questions.length) {
+        displayQuestions(currentQuestionIndex)
+    }
+    else {
+        endQuiz()
+    }
+})
+
+function endQuiz() {
+    buttonBody.style.display = "none"
+    questionEl.innerHTML =  "You completed the quiz with " + seconds + " seconds left"
+    console.log("quiz ended")
+}
 
 

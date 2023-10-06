@@ -87,7 +87,7 @@ var questions = [
             "With the . selector",
             "With the element class selector"
         ],
-        answer: "With the # class selector"
+        answer: "With the # selector"
     },
     {
         question: "Which one of these is the modulus operator?",

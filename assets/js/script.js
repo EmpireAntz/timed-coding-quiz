@@ -13,12 +13,13 @@ var timer = document.querySelector("#timer")
 var startButton = document.querySelector("#start")
 var buttonBody = document.querySelector("#answerButtons")
 var questionEl = document.querySelector("#question")
+var highscores = document.querySelector("#highscores")
 var seconds = 60
 var currentQuestionIndex = 0
 var timerInterval;
 var answeredCorrectly = 0
 var questions = [
-
+    
     {
         question: "What does HTML stand for?",
         choices: [ 
@@ -119,8 +120,24 @@ var questions = [
         ],
         answer: "As many as you want"
     }
-
+    
 ]
+function displayHighscores() {
+    var savedScores = JSON.parse(localStorage.getItem("highscores")) || []
+    questionEl.innerHTML = "Highscores:"
+    var scoreList = document.createElement("ul")
+    for (var i = 0; i < savedScores.length; i++) {
+        var listItem = document.createElement("li")
+        listItem.textContent = "Time left: " + savedScores[i].score + " seconds" +" | Answered Correctly: " + savedScores[i].correctAnswers + " of " + questions.length
+        scoreList.appendChild(listItem)
+    }
+    questionEl.appendChild(scoreList)
+    if(listItem > 10) {
+        
+    }
+}
+highscores.addEventListener("click", displayHighscores)
+
 startButton.addEventListener("click", function() {
     startButton.style.display ="none"
     startTimer()
@@ -161,10 +178,10 @@ document.querySelector("#answerButtons").addEventListener("click", function(even
     else {
         console.log("incorrect")
         if(seconds > 10) {
-        seconds -= 10
+            seconds -= 10
         }
     }
-
+    
     currentQuestionIndex++
     
     if (currentQuestionIndex < questions.length) {
@@ -188,6 +205,15 @@ function endQuiz() {
     }
     score.innerHTML = "You answered " + answeredCorrectly + " out of " + questions.length + " correct"
     questionEl.appendChild(score)
+
+    var savedScores = JSON.parse(localStorage.getItem("highscores")) || []
+    var newScore = {
+        score: seconds,
+        correctAnswers: answeredCorrectly
+    }
+    savedScores.push(newScore)
+    localStorage.setItem("highscores", JSON.stringify(savedScores))
+    
 }
 
 

@@ -11,11 +11,13 @@
 // THEN I can save my initials and my score
 var timer = document.querySelector("#timer")
 var startButton = document.querySelector("#start")
+var startBtnContainer = document.querySelector("#buttonContainer")
 var buttonBody = document.querySelector("#answerButtons")
 var questionEl = document.querySelector("#question")
 var highscores = document.querySelector("#highscores")
 var userInput = document.querySelector("#input")
 var userSubmitButton = document.querySelector("#submit")
+var quizTaken = false
 var seconds = 60
 var currentQuestionIndex = 0
 var timerInterval;
@@ -126,13 +128,20 @@ var questions = [
 ]
 
 highscores.addEventListener("click", displayHighscores)
-startButton.addEventListener("click", function() {
+startButton.addEventListener("click", start)
+
+function start() {
     startButton.style.display ="none"
+    highscores.style.pointerEvents = "none"
+    buttonBody.style.display = "block"
+    currentQuestionIndex = 0
+    seconds = 60
     startTimer()
     displayQuestions(currentQuestionIndex)
-})
+}
 
 function startTimer() {
+    clearInterval(timerInterval)
     timerInterval = setInterval(function() {
         seconds--
         timer.textContent = seconds 
@@ -180,6 +189,7 @@ document.querySelector("#answerButtons").addEventListener("click", function(even
 
 function endQuiz() {
     console.log("quiz ended")
+    quizTaken = true
     buttonBody.style.display = "none"
     var score = document.createElement("p")
     stopTimer()
@@ -203,6 +213,7 @@ function endQuiz() {
         if (!initials) {
             return
         }
+        highscores.style.pointerEvents= "auto"
         var highScoresList = JSON.parse(localStorage.getItem("highscores")) || []
         highScoresList.push({
             initials: initials,
@@ -224,7 +235,14 @@ function displayHighscores() {
         var listItem = document.createElement("li")
         listItem.textContent = savedScores[i].initials + " | Time left: " + savedScores[i].score + " seconds" +" | Answered Correctly: " + savedScores[i].correctAnswers + " of " + questions.length
         scoreList.appendChild(listItem)
+        questionEl.appendChild(scoreList)
     }
-    questionEl.appendChild(scoreList)
-    startButton.style.display = "block"
+    if (quizTaken) {
+        startButton.innerHTML = "Retake Quiz?"
+        startButton.style.display = "block"
+        startButton.addEventListener("click", function() {
+            currentQuestionIndex = 0
+            start()
+        })
+    }
 }

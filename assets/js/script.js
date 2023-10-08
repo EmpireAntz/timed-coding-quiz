@@ -14,6 +14,8 @@ var startButton = document.querySelector("#start")
 var buttonBody = document.querySelector("#answerButtons")
 var questionEl = document.querySelector("#question")
 var highscores = document.querySelector("#highscores")
+var userInput = document.querySelector("#input")
+var userSubmitButton = document.querySelector("#submit")
 var seconds = 60
 var currentQuestionIndex = 0
 var timerInterval;
@@ -122,22 +124,8 @@ var questions = [
     }
     
 ]
-function displayHighscores() {
-    var savedScores = JSON.parse(localStorage.getItem("highscores")) || []
-    questionEl.innerHTML = "Highscores:"
-    var scoreList = document.createElement("ul")
-    for (var i = 0; i < savedScores.length; i++) {
-        var listItem = document.createElement("li")
-        listItem.textContent = "Time left: " + savedScores[i].score + " seconds" +" | Answered Correctly: " + savedScores[i].correctAnswers + " of " + questions.length
-        scoreList.appendChild(listItem)
-    }
-    questionEl.appendChild(scoreList)
-    if(listItem > 10) {
-        
-    }
-}
-highscores.addEventListener("click", displayHighscores)
 
+highscores.addEventListener("click", displayHighscores)
 startButton.addEventListener("click", function() {
     startButton.style.display ="none"
     startTimer()
@@ -181,9 +169,7 @@ document.querySelector("#answerButtons").addEventListener("click", function(even
             seconds -= 10
         }
     }
-    
     currentQuestionIndex++
-    
     if (currentQuestionIndex < questions.length) {
         displayQuestions(currentQuestionIndex)
     }
@@ -205,15 +191,40 @@ function endQuiz() {
     }
     score.innerHTML = "You answered " + answeredCorrectly + " out of " + questions.length + " correct"
     questionEl.appendChild(score)
-
-    var savedScores = JSON.parse(localStorage.getItem("highscores")) || []
-    var newScore = {
-        score: seconds,
-        correctAnswers: answeredCorrectly
-    }
-    savedScores.push(newScore)
-    localStorage.setItem("highscores", JSON.stringify(savedScores))
-    
+    var userInputField = document.createElement("input")
+    userInputField.type = "text"
+    userInputField.placeholder = "Please enter your initials"
+    userInput.appendChild(userInputField)
+    var submitBtn = document.createElement("button")
+    submitBtn.innerHTML = "Submit"
+    userSubmitButton.appendChild(submitBtn)
+    submitBtn.addEventListener("click", function() {
+        var initials = userInputField.value
+        if (!initials) {
+            return
+        }
+        var highScoresList = JSON.parse(localStorage.getItem("highscores")) || []
+        highScoresList.push({
+            initials: initials,
+            score: seconds,
+            correctAnswers: answeredCorrectly
+        })
+        localStorage.setItem("highscores", JSON.stringify(highScoresList))
+        displayHighscores()
+        userInputField.style.display= "none"
+        submitBtn.style.display = "none"
+    })
 }
 
-
+function displayHighscores() {
+    var savedScores = JSON.parse(localStorage.getItem("highscores")) || []
+    questionEl.innerHTML = "Highscores:"
+    var scoreList = document.createElement("ul")
+    for (var i = 0; i < savedScores.length; i++) {
+        var listItem = document.createElement("li")
+        listItem.textContent = savedScores[i].initials + " | Time left: " + savedScores[i].score + " seconds" +" | Answered Correctly: " + savedScores[i].correctAnswers + " of " + questions.length
+        scoreList.appendChild(listItem)
+    }
+    questionEl.appendChild(scoreList)
+    startButton.style.display = "block"
+}

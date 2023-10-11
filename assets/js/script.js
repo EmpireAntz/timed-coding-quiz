@@ -11,14 +11,11 @@
 // THEN I can save my initials and my score
 var timer = document.querySelector("#timer")
 var startButton = document.querySelector("#start")
-var startBtnContainer = document.querySelector("#buttonContainer")
 var buttonBody = document.querySelector("#answerButtons")
 var questionEl = document.querySelector("#question")
 var highscores = document.querySelector("#highscores")
-var userInput = document.querySelector("#input")
-var userSubmitButton = document.querySelector("#submit")
 var quizTaken = false
-var seconds = 60
+var seconds = 120
 var currentQuestionIndex = 0
 var timerInterval;
 var answeredCorrectly = 0
@@ -136,7 +133,7 @@ function start() {
     buttonBody.style.display = "block"
     currentQuestionIndex = 0
     answeredCorrectly = 0
-    seconds = 60
+    seconds = 120
     startTimer()
     displayQuestions(currentQuestionIndex)
 }
@@ -196,8 +193,10 @@ function endQuiz() {
     console.log("quiz ended")
     quizTaken = true
     buttonBody.style.display = "none"
-    var score = document.createElement("p")
     stopTimer()
+    var score = document.createElement("p")
+    var userInput = document.querySelector("#input")
+    var userSubmitButton = document.querySelector("#submit")
     if (seconds == 0) {
         questionEl.innerHTML = "You Ran out of time!"
     }
@@ -214,7 +213,7 @@ function endQuiz() {
     submitBtn.innerHTML = "Submit"
     userSubmitButton.appendChild(submitBtn)
     submitBtn.addEventListener("click", function() {
-        var initials = userInputField.value
+        var initials = userInputField.value.toUpperCase()
         if (!initials) {
             return
         }

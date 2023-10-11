@@ -135,6 +135,7 @@ function start() {
     highscores.style.pointerEvents = "none"
     buttonBody.style.display = "block"
     currentQuestionIndex = 0
+    answeredCorrectly = 0
     seconds = 60
     startTimer()
     displayQuestions(currentQuestionIndex)
@@ -167,7 +168,11 @@ function displayQuestions(index) {
     }
 }
 
-document.querySelector("#answerButtons").addEventListener("click", function(event) {
+buttonBody.addEventListener("click", function(event) {
+    if (event.target.tagName !== "BUTTON") {
+        console.log("not a button")
+        return 
+    }
     if (event.target.innerHTML === questions[currentQuestionIndex].answer) {
         console.log("correct")
         answeredCorrectly ++
@@ -241,7 +246,6 @@ function displayHighscores() {
         startButton.innerHTML = "Retake Quiz?"
         startButton.style.display = "block"
         startButton.addEventListener("click", function() {
-            currentQuestionIndex = 0
             start()
         })
     }

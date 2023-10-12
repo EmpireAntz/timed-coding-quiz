@@ -165,7 +165,9 @@ function displayQuestions(index) {
     }
 }
 
-buttonBody.addEventListener("click", function(event) {
+buttonBody.addEventListener("click", answerButtonHandler)
+
+function answerButtonHandler (event) {
     if (event.target.tagName !== "BUTTON") {
         console.log("not a button")
         return 
@@ -187,7 +189,7 @@ buttonBody.addEventListener("click", function(event) {
     else {
         endQuiz()
     }
-})
+}
 
 function endQuiz() {
     console.log("quiz ended")

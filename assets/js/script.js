@@ -78,7 +78,7 @@ var questions = [
             "With the . selector",
             "With the element class selector"
         ],
-        answer: "With the # selector"
+        answer: "With the . selector"
     },
     {
         question: "Which one of these is the modulus operator?",
@@ -144,12 +144,13 @@ function stopTimer() {
 }
 
 function displayQuestions(index) {
-    questionEl.innerHTML = questions[index].question
-    buttonBody.innerHTML = ""
+    var currentQuestion = questions[index]
+    questionEl.textContent = currentQuestion.question
+    buttonBody.textContent = ""
     console.log(index)
-    for (i = 0; i < questions[index].choices.length; i++) {
+    for (i = 0; i < currentQuestion.choices.length; i++) {
         var button = document.createElement("button")
-        button.innerHTML = questions[index].choices[i]
+        button.textContent = currentQuestion.choices[i]
         buttonBody.appendChild(button)
     }
 }
@@ -161,7 +162,7 @@ function answerButtonHandler (event) {
         console.log("not a button")
         return 
     }
-    if (event.target.innerHTML === questions[currentQuestionIndex].answer) {
+    if (event.target.textContent === questions[currentQuestionIndex].answer) {
         console.log("correct")
         answeredCorrectly ++
     }
@@ -189,19 +190,19 @@ function endQuiz() {
     var userInput = document.querySelector("#input")
     var userSubmitButton = document.querySelector("#submit")
     if (seconds == 0) {
-        questionEl.innerHTML = "You Ran out of time!"
+        questionEl.textContent = "You Ran out of time!"
     }
     else {
-        questionEl.innerHTML =  "You completed the quiz with " + seconds + " seconds left"
+        questionEl.textContent =  "You completed the quiz with " + seconds + " seconds left"
     }
-    score.innerHTML = "You answered " + answeredCorrectly + " out of " + questions.length + " correct"
+    score.textContent = "You answered " + answeredCorrectly + " out of " + questions.length + " correct"
     questionEl.appendChild(score)
     var userInputField = document.createElement("input")
     userInputField.type = "text"
     userInputField.placeholder = "Please enter your initials"
     userInput.appendChild(userInputField)
     var submitBtn = document.createElement("button")
-    submitBtn.innerHTML = "Submit"
+    submitBtn.textContent = "Submit"
     userSubmitButton.appendChild(submitBtn)
     submitBtn.addEventListener("click", function() {
         var initials = userInputField.value.toUpperCase()
@@ -224,7 +225,7 @@ function endQuiz() {
 
 function displayHighscores() {
     var savedScores = JSON.parse(localStorage.getItem("highscores")) || []
-    questionEl.innerHTML = "Highscores:"
+    questionEl.textContent = "Highscores:"
     var scoreList = document.createElement("ul")
     for (var i = 0; i < savedScores.length; i++) {
         var listItem = document.createElement("li")
@@ -233,8 +234,9 @@ function displayHighscores() {
         questionEl.appendChild(scoreList)
     }
     if (quizTaken) {
-        startButton.innerHTML = "Retake Quiz?"
+        startButton.textContent = "Retake Quiz?"
         startButton.style.display = "block"
+        startButton.removeEventListener("click", start)
         startButton.addEventListener("click", function() {
             start()
         })

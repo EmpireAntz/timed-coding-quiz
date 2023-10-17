@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Link to my reset stylesheet. The reset is only affecting buttons-->   
     <link rel ="stylesheet" href="assets/css/reset.css">
+    <!--link to my main stylesheet that make my page look unique and decorated-->
     <link rel ="stylesheet" href="assets/css/style.css">
     <title>Coding Quiz</title>
 </head>
 <body>
     <main>
+        <!--Header containing a link to highscores as well as a timer which is all being updated by the Javascript-->
         <header>
             <a href ="#" id="highscores">View Highscores</a>
             <div id ="timeywimey">Time: <span id ="timer">120</span>s</div>
         </header>
+        <!--Button that starts the quiz-->
         <div id="buttonContainer">
             <button id ="start">Take Quiz</button>
         </div>
+        <!--Area for the quiz content to go. The divs are containers for the questions, answers, input and submit. This is all manipulated with the Javascript-->
         <div id="quizContent">
             <div id="question"></div>
             <div id="answerButtons"></div>
@@ -23,6 +28,7 @@
             <div id="submit"></div>
         </div>
     </main>
+    <!--Link to the Javascript that makes this website interactive-->
     <script src="assets/js/script.js"></script>
 </body>
 </html>

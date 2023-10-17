@@ -1,3 +1,4 @@
+/*Global styles which inclide variables for colors that get reused throughout the webpage*/
 :root {
     --text: #F7F0FA;
     --background: #060208;
@@ -5,94 +6,121 @@
     --secondary: #30133A;
     --accent: #AA52C7;
 }
-
+/*Styles the body*/
 body {
+    /*Margin and padding set to 0 to make values easier to work with later*/
     margin: 0;
     padding: 0;
+    /*Font changed for the whole webpage*/
     font-family: Arial, Helvetica, sans-serif;
+    /*Changes the background color to whatever the backround variable color is set to*/
     background-color: var(--background);
+    /*Changes the font color to be whatever the text variable color is*/
     color: var(--text);
 }
-
+/*Styling for the header*/
 header {
+    /*Put flexbox on the header and put space between so that they stay on the far right and far left of the page*/
     display: flex;
     justify-content: space-between;
+    /*Changed the margin so theres a little more spacing around the element*/
     margin: 20px;
+    /*Set the header font size*/
     font-size: 25px;
 }
-
+/*Changes the color for the anchor elements*/
 a {
     color: var(--primary);
 }
-
+/*Makes it so the list items dont have bullet points*/
 li {
     list-style: none;
 }
-
+/*Styling for my input field*/
 input {
+    /*Changes the background color to the primary variable and the text color the the text variable*/
     background-color: var(--primary);
     color: var(--text);
+    /*Resets the border to 0 so the input isnt outlined*/
     border: 0;
+    /*Slightly rounds the edges of the input field*/
     border-radius: 2px;
+    /*Adds mild padding for the text to have a little more room inside the input field*/
     padding: 3px;
 }
-
+/*Styles the input placeholder text to be the same color as the user input text*/
 input::placeholder {
     color: var(--text);
 }
-
+/*Styles Set for all button elements*/
 button {
+    /*Makes sure the buttons stay stacked in a column at all screen sized*/
     display: block;
+    /*Added a margin to increase the spacing above the buttons*/
     margin-top: 30px;
+    /*Rounds out the button edges*/
     border-radius: 5px;
+    /*Provides a little more space inside the button around the text*/
     padding: 15px;
+    /*Sets the colors for the button and the button text*/
     background-color: var(--secondary);
     color: var(--text);
+    /*Changes the font size for the text inside the button*/
     font-size: 20px;
-    
 }
-
+/*Styling effects for when the button is being hovered over*/
 button:hover {
+    /*Button moves up slightly when hovered over*/
     transform: translateY(-2px);
+    /*Button size is slightly increased when hovered over*/
     scale: 110%;
+    /*Makes the hover transition more smooth looking*/
     transition: 250ms;
+    /*Color of the button changes when hovered over*/
     background-color: var(--primary);
+    /*Adds a glow-like effect to the button when hovered over*/
     box-shadow: var(--primary) 0px 5px 15px;
 }
-
+/*Styles the container of the take quiz button so that its centered on the page*/
 #buttonContainer {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+/*Adds a margin around all the answer buttons*/
 #answerButtons {
     margin: 50px;
 }
-
+/*Centers the questions, adds margin space around the element and font size changed*/
 #question {
  text-align: center;
  margin: 30px;
  font-size: 30px;
 }
-
+/*Centers the input field on the page and changes is size to be larger than the base sizing*/
 #input {
     display: flex;
     justify-content: center;
     align-items: center;
     scale: 150%;
 }
-
+/*Changes the background color of all input elements when hovered over*/
 input:hover {
     background-color: var(--accent);
 }
-
+/*Centers the submit button on the page*/
 #submit {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+/*Changes the timer display color*/
 #timeywimey {
     color: var(--accent);
+}
+/*Media query for smaller phone screens so the timer and highscores dont wrap*/
+@media screen and (max-width: 375px) {
+    header {
+        font-size: 20px;
+    }
 }

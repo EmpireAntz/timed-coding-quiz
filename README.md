@@ -6,8 +6,8 @@ This web application is designed to be a small coding quiz that can be added upo
 
 - [Technologies Used](#technologies-used)
 - [Features](#features)
-- [Screenshots](#screenshots)
 - [Functionality](#functionality)
+- [Screenshots](#screenshots)
 - [Website Link](#website-link)
 - [Credits](#credits)
 
@@ -22,7 +22,6 @@ This web application is designed to be a small coding quiz that can be added upo
 - **Timed Mechanics**: The quiz is time-bound, creating a sense of urgency and competitive spirit. Users have exactly 120 seconds to answer all questions.
 - **Dynamic UI**: As users navigate through the quiz, questions and choices are rendered dynamically, providing a smooth user experience.
 - **Penalty System**: To make the challenge more interesting, incorrect answers deduct 10 seconds from the timer, pushing users to make thoughtful selections.
-- **Highscore System**: After completing the quiz, users can save their scores along with their initials. This feature provides replay value, encouraging users to beat their high scores.
 - **Responsive Layout**: The design caters to a variety of screen sizes, ensuring a consistent user experience across devices.
 
 ## Functionality
